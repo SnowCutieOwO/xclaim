@@ -3,8 +3,6 @@ veteran-time: 604800 # measured in seconds
 stop-editing-on-shutdown: false
 stop-editing-on-leave: true
 exempt-claim-owner-from-permission-rules: true
-enforce-adjacent-claim-chunks: true
-allow-diagonal-claim-chunks: true
 enter-chunk-editor-on-create: true
 use-economy: false
 limits:
@@ -39,3 +37,12 @@ worlds:
     - minigames
     - pvp
     - etc
+chunks:
+  # Claim Rule
+  # 0 : No rules
+  # 1 : Chunks must be next to each other in a claim
+  # 2 : Chunks must be next to or diagonal to each other in a claim
+  # 3 : Chunks can be in any configuration in a claim, and max-inner-distance / max-outer-distance is considered
+  claim-rule: 2
+  max-inner-distance: 4 # Each chunk in a claim must be at least this close to at least 1 other claimed chunk
+  max-outer-distance: 36 # Each chunk in a claim must be at least this close to EVERY other claimed chunk

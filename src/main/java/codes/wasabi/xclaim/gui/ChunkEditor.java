@@ -5,19 +5,18 @@ import codes.wasabi.xclaim.api.Claim;
 import codes.wasabi.xclaim.api.XCPlayer;
 import codes.wasabi.xclaim.economy.Economy;
 import codes.wasabi.xclaim.platform.*;
+import codes.wasabi.xclaim.util.ConfigUtil;
 import codes.wasabi.xclaim.util.DisplayItem;
 import codes.wasabi.xclaim.util.InventorySerializer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -134,6 +133,12 @@ public class ChunkEditor {
                                 break;
                             }
                         }
+                        ConfigUtil.ChunkAllowedResponse resp = ConfigUtil.chunkIsAllowed(XClaim.mainConfig, claim.getChunks(), chunk);
+                        if (!resp.isAllowed()) {
+                            Platform.getAdventure().player(ply).sendMessage(resp.getMessage());
+                            return;
+                        }
+                        /*
                         if (XClaim.mainConfig.getBoolean("enforce-adjacent-claim-chunks", true)) {
                             boolean diagonals = XClaim.mainConfig.getBoolean("allow-diagonal-claim-chunks", true);
                             boolean nextTo = false;
@@ -191,6 +196,7 @@ public class ChunkEditor {
                                 break;
                             }
                         }
+                        */
                         XCPlayer xcp = XCPlayer.of(ply);
                         int numChunks = 0;
                         int maxChunks = xcp.getMaxChunks();
@@ -250,6 +256,7 @@ public class ChunkEditor {
                                 }
                             }
                             Platform.getAdventure().player(ply).sendMessage(XClaim.lang.getComponent("chunk-editor-remove"));
+                            if (claim.getChunks().size() < 1) stopEditing(ply);
                         } else {
                             Platform.getAdventure().player(ply).sendMessage(XClaim.lang.getComponent("chunk-editor-redundant-remove"));
                         }

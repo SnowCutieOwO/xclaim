@@ -63,8 +63,8 @@ See all options in the [config section](#config).
 | stop-editing-on-shutdown | Whether players should be booted out of the chunk editor on shutdown | false |
 | stop-editing-on-leave | Whether players should be booted out of the chunk editor when they leave voluntarily | true |
 | exempt-claim-owner-from-permission-rules | If claim owners should have access to all permissions on the claim implicitly. You shouldn't change this, it's mainly for debugging | true |
-| enforce-adjacent-claim-chunks | Whether chunks in a claim must be next to each other | true |
-| allow-diagonal-claim-chunks | If enforce-adjacent-claim-chunks is true, this sets if chunks diagonal from each other are considered as "next to" each other. Otherwise, does nothing. | true |
+| ~~enforce-adjacent-claim-chunks~~ | **THIS CONFIG KEY IS DEPRECATED, SEE ``chunks.claim-rule`` INSTEAD**. Whether chunks in a claim must be next to each other | true |
+| ~~allow-diagonal-claim-chunks~~ | **THIS CONFIG KEY IS DEPRECATED, SEE ``chunks.claim-rule`` INSTEAD**. If enforce-adjacent-claim-chunks is true, this sets if chunks diagonal from each other are considered as "next to" each other. Otherwise, does nothing. | true |
 | enter-chunk-editor-on-create | If true, then players will enter the chunk editor when they make a new claim | true |
 | use-economy | Whether to use economy features | false |
 | limits.𝘨𝘳𝘰𝘶𝘱-𝘯𝘢𝘮𝘦.max-chunks | Sets the max chunks for a group. See Permissions for more info. | |
@@ -83,6 +83,9 @@ See all options in the [config section](#config).
 | worlds.whitelist | A list that a world must be in for it to work with XClaim | a sample list |
 | worlds.blacklist | A list that a world must NOT be in for it to work with XClaim | a sample list |
 | worlds.grace-time | If a claim is in a disallowed world, players have this much time in seconds before the claim is automatically removed | 604800 (1 week) |
+| chunks.claim-rule | An integer that describes the rules that chunks need to follow when being added to a claim. 0 signifies no rules, 1 signifies that chunks must be next to each other, 2 signifies that chunks must be next to or diagonal from each other, and 3 signifies that ``chunks.max-inner-distance`` and ``chunks.max-outer-distance`` should be used to determine if a chunk may be added to a claim. | 2 |
+| chunks.max-inner-distance | If ``chunks.claim-rule`` is 3, this is the furthest amount (in chunks) that a chunk can be from another chunk in its claim | 4 |
+| chunks.max-outer-distance | If ``chunks.claim-rule`` is 3, this is the furthest amount (in chunks) that a chunk can be from ALL OTHER CHUNKS in its claim | 36 |
 
 ## Permissions
 Don't worry, there aren't that many.
